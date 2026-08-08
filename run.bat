@@ -51,8 +51,8 @@ echo [OK] Virtual environment activated
 :: -- Install/upgrade dependencies --
 echo.
 echo [*] Checking dependencies...
-pip install --upgrade pip -q
-pip install -r requirements.txt -q
+python -m pip install --upgrade pip --quiet 2>nul
+python -m pip install -r requirements.txt --quiet --no-cache-dir
 if errorlevel 1 (
     echo [ERROR] Error installing dependencies.
     pause
