@@ -49,25 +49,17 @@ if not exist "venv" (
 call venv\Scripts\activate.bat
 echo [OK] Virtual environment activated
 
-:: -- Install PyTorch CPU-only (large package) --
+:: -- Install dependencies --
 echo.
-echo [*] Installing PyTorch CPU-only (~1.5 GB, may take 5-15 min)...
-echo     Please wait patiently...
-python -m pip install torch --index-url https://download.pytorch.org/whl/cpu --no-cache-dir
-if errorlevel 1 (
-    echo [ERROR] Failed to install PyTorch.
-    pause
-    exit /b 1
-)
-echo [OK] PyTorch installed
-
-:: -- Install other dependencies --
+echo [*] Installing dependencies...
+echo     This will take 5-15 minutes. Please wait...
 echo.
-echo [*] Installing other dependencies...
-python -m pip install -r requirements.txt --no-cache-dir
+python -m pip install -r requirements.txt
 if errorlevel 1 (
     echo.
-    echo [ERROR] pip install failed. Check your internet connection.
+    echo [ERROR] pip install failed. See error above.
+    echo         Try running manually:
+    echo         python -m pip install -r requirements.txt
     pause
     exit /b 1
 )
