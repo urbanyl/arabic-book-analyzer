@@ -1,5 +1,6 @@
 @echo off
 chcp 65001 >nul 2>&1
+setlocal EnableDelayedExpansion
 title Arabic Book Analyzer
 color 0A
 
@@ -48,29 +49,30 @@ if not exist "venv" (
 call venv\Scripts\activate.bat
 echo [OK] Virtual environment activated
 
-:: -- Install/upgrade dependencies --
+:: -- Install dependencies --
 echo.
-echo [*] Checking dependencies...
-python -m pip install --upgrade pip --quiet 2>nul
-python -m pip install -r requirements.txt --quiet --no-cache-dir
+echo [*] Installing dependencies (this may take a few minutes)...
+echo.
+python -m pip install -r requirements.txt --no-cache-dir
 if errorlevel 1 (
-    echo [ERROR] Error installing dependencies.
+    echo.
+    echo [ERROR] pip install failed. Check your internet connection.
     pause
     exit /b 1
 )
+echo.
 echo [OK] All dependencies installed
 
 :: -- Check Ollama --
 echo.
 echo [*] Checking Ollama...
-ollama --version >nul 2>&1
+where ollama >nul 2>&1
 if errorlevel 1 (
     echo [WARNING] Ollama not detected in PATH.
     echo           Make sure Ollama is installed and running.
     echo           Download: https://ollama.com
     echo.
-    echo           Press any key to continue anyway...
-    pause >nul
+    pause
 ) else (
     for /f "tokens=*" %%v in ('ollama --version') do echo [OK] %%v detected
     
@@ -109,5 +111,4 @@ call python main.py
 :: -- On exit --
 echo.
 echo [*] Application closed.
-call venv\Scripts\deactivate.bat >nul 2>&1
 pause
