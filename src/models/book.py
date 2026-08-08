@@ -25,7 +25,7 @@ class Book:
     metadata: dict = field(default_factory=dict)
 
     @property
-    def reference(self) -> str
+    def reference(self) -> str:
         parts = [self.title]
         if self.author:
             parts.append(f"تأليف: {self.author}")
