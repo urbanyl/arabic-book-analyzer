@@ -104,7 +104,7 @@ echo   Launching application...
 echo ==========================================================
 echo.
 
-python main.py
+call python main.py
 
 :: -- On exit --
 echo.
